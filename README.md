@@ -15,15 +15,18 @@ that still reads clearly at 300 pixels across.
 
 ## How it works
 
-`main.py` (Python 3.13, standard library only) copies the repository's
-`entry.png` to the output directory: `$MAKEFUN_OUTPUT_DIR` when set,
-otherwise `/output`. Pure byte copy — no network, no randomness — so two
-runs write byte-identical output.
+`main.py` (Python 3.13, standard library only) reads the picture from
+`image.b64` — the JPEG bytes stored as one line of base64 text, so the
+repository holds only text — decodes it, and writes the exact bytes to
+`$MAKEFUN_OUTPUT_DIR/entry.png` (or `/output` when unset). No network,
+no randomness: two runs write byte-identical output. The decoded picture
+is a 1024x1024 JPEG, 185,412 bytes, and the program checks it starts
+with the JPEG magic bytes before writing.
 
 ## Files
 
-- `main.py` — the entrypoint, copies `entry.png` to the output directory
-- `entry.png` — the picture (1024x1024 JPEG bytes, 185,412 bytes)
+- `main.py` — the entrypoint, decodes `image.b64` to the output directory
+- `image.b64` — the picture, one line of base64 (decodes to the JPEG)
 - `LICENSE` — MIT
 
 ## Run it locally
